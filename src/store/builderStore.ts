@@ -8,17 +8,22 @@ import {
 } from '@/constant'
 import { getDefaultNodeData } from '@/lib/util'
 
-export type NodeData = {
+export type NodeDataType = {
   email: { recipient: string; subject: string; body: string }
   log: { message: string }
   calculation: { num1: number; num2: number; operation: 'add' | 'multiply' }
 }
 
+export type NodeData = {
+  [k: string]:
+    | NodeDataType['email']
+    | NodeDataType['calculation']
+    | NodeDataType['log']
+}
+
 type BuilderState = {
   defaultTemplate: { nodes: Node[]; edges: Edge[] }
-  nodeData: {
-    [k: string]: NodeData['email'] | NodeData['calculation'] | NodeData['log']
-  }
+  nodeData: NodeData
   nodes: Node[]
   edges: Edge[]
   setNodes: (data: Node[]) => void
