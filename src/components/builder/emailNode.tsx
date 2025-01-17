@@ -23,7 +23,7 @@ export const EmailNode: React.FC<NodeProps> = ({ isConnectable, id }) => {
           type="email"
           value={data.recipient}
           onChange={(e) => updateEmailData(id, { recipient: e.target.value })}
-          placeholder="Recipient"
+          placeholder="johnWick@gmail.com"
           className="w-full mb-2 p-1 border"
         />
         <input

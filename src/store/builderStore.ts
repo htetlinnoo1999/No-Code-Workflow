@@ -11,7 +11,11 @@ import { getDefaultNodeData } from '@/lib/util'
 export type NodeDataType = {
   email: { recipient: string; subject: string; body: string }
   log: { message: string }
-  calculation: { num1: number; num2: number; operation: 'add' | 'multiply' }
+  calculation: {
+    num1: number | string
+    num2: number | string
+    operation: 'add' | 'multiply'
+  }
 }
 
 export type NodeData = {
