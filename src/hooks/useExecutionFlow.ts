@@ -1,7 +1,29 @@
+import { NodeType } from '@/constant'
 import { NodeData, NodeDataType } from '@/store/builderStore'
+import useToastStore from '@/store/toastStore'
 import { Node } from 'reactflow'
 
 export const useExecutionFlow = () => {
+  const { setToast } = useToastStore()
+
+  const validateCalculationNodes = (nodes: Node[]): boolean => {
+    for (const node of nodes) {
+      if (node.type === 'CALCULATION_NODE') {
+        const calculationData = node.data as NodeDataType['calculation']
+        const { num1, num2 } = calculationData
+
+        if (typeof num1 !== 'number' || typeof num2 !== 'number') {
+          setToast({
+            title: `Calculation Node data is Invalid.`,
+            type: 'error',
+          })
+          return false
+        }
+      }
+    }
+    return true
+  }
+
   const simulateNodeAction = async (node: Node, nodeData: NodeData) => {
     switch (node.type) {
       case 'EMAIL_NODE': {
@@ -21,11 +43,12 @@ export const useExecutionFlow = () => {
       case 'CALCULATION_NODE': {
         const calculationData = nodeData[node.id] as NodeDataType['calculation']
         const { num1, num2, operation } = calculationData
+        // can convert to number at this point because it's already validated and throw an error.
         const result =
           operation === 'add'
-            ? num1 + num2
+            ? parseInt(num1 as string) + parseInt(num2 as string)
             : operation === 'multiply'
-            ? num1 * num2
+            ? parseInt(num1 as string) * parseInt(num2 as string)
             : null
         console.log(`Calculation Result: ${result}`)
         break
@@ -41,8 +64,11 @@ export const useExecutionFlow = () => {
 
   const executeWorkflow = (nodes: Node[], nodeData: NodeData) => {
     ;(async () => {
+      const isValid = validateCalculationNodes(nodes)
+      if (!isValid) return
       for (const node of nodes) {
-        console.log(`Executing Node: ${node.id} (${node.type})`)
+        if (node.type === NodeType.CALCULATION_NODE)
+          console.log(`Executing Node: ${node.id} (${node.type})`)
         await simulateNodeAction(node, nodeData)
       }
       console.log('Workflow Execution Completed!')

@@ -8,7 +8,7 @@ export const getDefaultNodeData = (
     case NodeType.EMAIL_NODE:
       return { recipient: '', subject: '', body: '' }
     case NodeType.CALCULATION_NODE:
-      return { num1: 0, num2: 0, operation: 'add' }
+      return { num1: '', num2: '', operation: 'add' }
     default:
       return { message: '' }
   }
