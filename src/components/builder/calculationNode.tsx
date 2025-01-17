@@ -1,9 +1,9 @@
-import { NodeData, useBuilderStore } from '@/store/builderStore'
+import { NodeDataType, useBuilderStore } from '@/store/builderStore'
 import { Handle, NodeProps, Position } from 'reactflow'
 
 const CalculationNode: React.FC<NodeProps> = ({ isConnectable, id }) => {
   const { nodeData, updateCalculationData } = useBuilderStore()
-  const data = (nodeData[id] as NodeData['calculation']) ?? {
+  const data = (nodeData[id] as NodeDataType['calculation']) ?? {
     num1: '',
     num2: '',
     operation: 'add',

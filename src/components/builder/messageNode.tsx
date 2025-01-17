@@ -1,9 +1,9 @@
-import { NodeData, useBuilderStore } from '@/store/builderStore'
+import { NodeDataType, useBuilderStore } from '@/store/builderStore'
 import { Handle, NodeProps, Position } from 'reactflow'
 
 const LogMessageNode: React.FC<NodeProps> = ({ id, isConnectable }) => {
   const { nodeData, updateLogData } = useBuilderStore()
-  const data = (nodeData[id] as NodeData['log']) ?? {
+  const data = (nodeData[id] as NodeDataType['log']) ?? {
     message: '',
   }
   return (

@@ -1,9 +1,9 @@
-import { NodeData, useBuilderStore } from '@/store/builderStore'
+import { NodeDataType, useBuilderStore } from '@/store/builderStore'
 import { Handle, NodeProps, Position } from 'reactflow'
 
 export const EmailNode: React.FC<NodeProps> = ({ isConnectable, id }) => {
   const { nodeData, updateEmailData } = useBuilderStore()
-  const data = (nodeData[id] as NodeData['email']) ?? {
+  const data = (nodeData[id] as NodeDataType['email']) ?? {
     body: '',
     recipient: '',
     subject: '',
