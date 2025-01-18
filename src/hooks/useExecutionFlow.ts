@@ -17,7 +17,6 @@ export const useExecutionFlow = () => {
         const calculationData = nodeData[node.id] as NodeDataType['calculation']
         const { num1, num2 } = calculationData
 
-        console.log(typeof num1, typeof num2)
         if (typeof num1 !== 'number' || typeof num2 !== 'number') {
           setToast({
             title: `Calculation Node data is Invalid.`,
