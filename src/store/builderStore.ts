@@ -14,7 +14,7 @@ export type NodeDataType = {
   calculation: {
     num1: number | string
     num2: number | string
-    operation: 'add' | 'multiply'
+    operation: 'add' | 'multiply' | 'subtract' | 'divide'
   }
 }
 

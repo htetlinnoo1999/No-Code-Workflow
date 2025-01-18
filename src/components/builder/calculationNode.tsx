@@ -47,6 +47,8 @@ const CalculationNode: React.FC<NodeProps> = ({ isConnectable, id }) => {
         >
           <option value="add">Add</option>
           <option value="multiply">Multiply</option>
+          <option value="subtract">Subtract</option>
+          <option value="divide">Divide</option>
         </select>
       </div>
       <Handle
