@@ -1,10 +1,12 @@
 import { NodeType } from '@/constant'
 import { NodeData, NodeDataType } from '@/store/builderStore'
+import { useExecutionLogStore } from '@/store/executionLogStore'
 import useToastStore from '@/store/toastStore'
 import { Node } from 'reactflow'
 
 export const useExecutionFlow = () => {
   const { setToast } = useToastStore()
+  const addLog = useExecutionLogStore((state) => state.addExecutionLog)
 
   const validateCalculationNodes = (
     nodes: Node[],
@@ -85,13 +87,27 @@ export const useExecutionFlow = () => {
   const executeWorkflow = (nodes: Node[], nodeData: NodeData) => {
     ;(async () => {
       const isValid = validateCalculationNodes(nodes, nodeData)
-      if (!isValid) return
+      if (!isValid) {
+        addLog({
+          id: crypto.randomUUID(),
+          executedAt: new Date().toISOString(),
+          status: 'failure',
+          message: `Workflow execution failed: one of calculation nodes has error.`,
+        })
+        return
+      }
       for (const node of nodes) {
         if (node.type === NodeType.CALCULATION_NODE)
           console.log(`Executing Node: ${node.id} (${node.type})`)
         await simulateNodeAction(node, nodeData)
       }
-      console.log('Workflow Execution Completed!')
+      addLog({
+        id: crypto.randomUUID(),
+        executedAt: new Date().toISOString(),
+        status: 'success',
+        message: `Workflow executed successfully with ${nodes.length} steps.`,
+      })
+      setToast({ title: 'Workflow executed successfully.', type: 'success' })
     })()
   }
   return { executeWorkflow }
