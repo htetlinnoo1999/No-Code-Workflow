@@ -110,5 +110,5 @@ export const useExecutionFlow = () => {
       setToast({ title: 'Workflow executed successfully.', type: 'success' })
     })()
   }
-  return { executeWorkflow }
+  return { executeWorkflow, simulateNodeAction }
 }
