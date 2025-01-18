@@ -2,14 +2,18 @@ import { useBuilderStore } from '@/store/builderStore'
 import {
   IconCalculator,
   IconDownload,
+  IconInfoSquareRounded,
   IconMail,
   IconMessage,
   IconReload,
 } from '@tabler/icons-react'
+import { useNavigate } from 'react-router-dom'
 
 export const BuilderHeaderAction = () => {
   const { nodes, edges, saveAsDefault, loadDefaultTemplate, addNode } =
     useBuilderStore()
+  const navigate = useNavigate()
+
   return (
     <div className="flex w-10/12 gap-3 mx-auto justify-between">
       <button
@@ -55,6 +59,15 @@ export const BuilderHeaderAction = () => {
       >
         <IconMessage />
         Add Message Node
+      </button>
+
+      <button
+        type="button"
+        onClick={() => navigate('/execution-logs')}
+        className="flex gap-2 items-center text-yellow-700 hover:text-white border border-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+      >
+        <IconInfoSquareRounded />
+        Check Execution Log
       </button>
     </div>
   )
